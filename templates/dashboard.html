@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            padding: 20px 0;
+            margin: 0;
+            color: #4a90e2;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 1200px;
+        }
+        
+        /* User Details and Account Summary Styles */
+        .card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 45%;
+        }
+        .card h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        /* Call List Styles */
+        .call-list {
+            margin: 20px auto;
+            width: 90%;
+            max-width: 1200px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .call-list h2 {
+            margin-top: 0;
+            color: #4a90e2;
+        }
+        .call-list table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .call-list th, .call-list td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e1e5eb;
+        }
+        .call-list th {
+            background-color: #f7f9fc;
+            color: #555;
+        }
+        .call-list tr:hover {
+            background-color: #f1f5f9;
+        }
+        .call-list a {
+            color: #4a90e2;
+            text-decoration: none;
+        }
+        .call-list a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dashboard</h1>
+    <div class="container">
+        <div class="card user-details">
+            <h2>User Details</h2>
+            <p><strong>Name:</strong> {{ user_details.name }}</p>
+            <p><strong>Number:</strong> {{ user_details.number }}</p>
+            <p><strong>Company:</strong> {{ user_details.company }}</p>
+        </div>
+        <div class="card account-summary">
+            <h2>Account Summary</h2>
+            <p><strong>Total Calls Received:</strong> {{ total_calls }}</p>
+            <p><strong>Total Duration of Calls:</strong> {{ total_duration }} minutes</p>
+            <p><strong>Number of Cities Called From:</strong> {{ num_cities }}</p>
+        </div>
+    </div>
+    <div class="call-list">
+        <h2>Call List</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Number</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for call in call_list %}
+                <tr>
+                    <td><a href="{{ url_for('conversation_details', conversation_id=call['_id']) }}">{{ call['from_number'] }}</a></td>
+                    <td>{{ call['timestamp'].strftime('%Y-%m-%d') }}</td>
+                    <td>{{ call['timestamp'].strftime('%H:%M:%S') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

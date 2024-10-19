@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversation Details</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9;
+            color: #333;
+        }
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        h1 {
+            color: #4a90e2;
+            text-align: center;
+            margin: 0;
+            padding-bottom: 20px;
+        }
+        .conversation-header {
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e1e5eb;
+        }
+        .conversation-header h2, .conversation-header h3 {
+            margin: 0;
+            color: #333;
+        }
+        
+        /* Message Styles */
+        .message {
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 8px;
+            width: fit-content;
+            max-width: 80%;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .message.user {
+            background-color: #e1f5fe;
+            color: #0277bd;
+            align-self: flex-start;
+        }
+        .message.assistant {
+            background-color: #c8e6c9;
+            color: #2e7d32;
+            align-self: flex-end;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #4a90e2;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Conversation Details</h1>
+        <div class="conversation-header">
+            <h2>From Number: {{ conversation['from_number'] }}</h2>
+            <h3>Timestamp: {{ conversation['timestamp'] }}</h3>
+        </div>
+        {% for msg in conversation['conversation'] %}
+            <div class="message {{ msg['role'] }}">
+                <strong>{{ msg['role'].capitalize() }}:</strong> {{ msg['content'] }}
+            </div>
+        {% endfor %}
+        <a href="{{ url_for('dashboard') }}" class="back-link">Back to Dashboard</a>
+    </div>
+</body>
+</html>
